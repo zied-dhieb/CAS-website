@@ -9,12 +9,16 @@ export default function Contact() {
     <>
       <section className="container-page pt-16">
         <h1 data-node="Contact us" className="text-4xl font-bold sm:text-5xl">Contact us</h1>
-        <p className="mt-6 max-w-xl text-lg opacity-85">Questions about the chapter or how to join? Reach us here.</p>
+        <div className="card mt-6 max-w-xl">
+          <p className="text-lg opacity-90 leading-relaxed">Questions about the chapter or how to join? Reach us here.</p>
+        </div>
       </section>
       <section className="container-page mt-16">
         <h2 data-node="Channels" className="text-3xl font-bold">Find us</h2>
-        <p className="mt-4 opacity-85">Email: {site.contact.email} <Review /></p>
-        <p className="mt-1 opacity-85">Address: {site.contact.address} <Review /></p>
+        <div className="card mt-4 max-w-xl space-y-2">
+          <p className="opacity-90">Email: {site.contact.email} <Review /></p>
+          <p className="opacity-90">Address: {site.contact.address} <Review /></p>
+        </div>
         <ul className="mt-6 flex flex-wrap gap-3">
           {socials.map(([name, Icon, href]) => (
             <li key={name}><a href={href} target="_blank" rel="noreferrer" className="btn btn-ghost"><Icon size={18} />{name}</a></li>

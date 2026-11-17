@@ -52,16 +52,27 @@ export default function CircuitBoard() {
   const lines = (cls, w, style) => <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth={w} className={cls} style={style}>{paths}</g>
   const h = hover >= 0 ? g.nodes[hover] : null
 
+  const litH = Math.max(0, lit)
+  const tailFade = 140
+  const fadeStart = Math.max(0, litH - tailFade)
+
   return (
     <svg ref={svg} aria-hidden="true" width="100%" height={g.h} className="pointer-events-none absolute left-0 top-0 hidden lg:block">
       <defs>
-        <clipPath id="lit"><rect x="0" y="0" width="9999" height={Math.max(0, lit)} /></clipPath>
+        <clipPath id="lit"><rect x="0" y="0" width="9999" height={litH} /></clipPath>
+        <linearGradient id="neon-tail-fade" x1="0" y1={fadeStart} x2="0" y2={litH} gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+          <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+        </linearGradient>
+        <mask id="lit-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="9999" height={litH} style={{ maskType: 'luminance' }}>
+          <rect x="0" y="0" width="9999" height={litH} fill="url(#neon-tail-fade)" />
+        </mask>
         <linearGradient id="glass-off" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#d7efd0" stopOpacity=".6" /><stop offset="1" stopColor="#2E8B2E" stopOpacity=".35" /></linearGradient>
         <linearGradient id="glass-on" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#f0ffd2" /><stop offset="1" stopColor="#6BAA1C" /></linearGradient>
       </defs>
       {lines('stroke-brand/20', 9)}
       {lines('stroke-white/50', 2)}
-      <g clipPath="url(#lit)">
+      <g mask="url(#lit-mask)" style={{ mask: 'url(#lit-mask)', WebkitMask: 'url(#lit-mask)' }}>
         {lines('stroke-brand-light/40', 9, { filter: 'drop-shadow(0 0 8px #6BAA1C)' })}
         {lines('stroke-lime-200', 2.5)}
       </g>

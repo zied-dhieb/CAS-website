@@ -26,9 +26,11 @@ export default function Hero() {
       )}
       <section className="container-page relative z-10 pb-16 pt-16 sm:pt-28 sm:pb-28">
         <h1 data-node="Home" className="max-w-2xl text-4xl font-bold leading-tight sm:text-6xl">{site.tagline}</h1>
-        <p className="mt-6 max-w-xl text-lg opacity-85">
-          The student chapter of the IEEE Circuits and Systems Society at the National School of Electronics and Telecommunications of Sfax.
-        </p>
+        <div className="card mt-6 max-w-xl">
+          <p className="text-lg opacity-90 leading-relaxed">
+            The student chapter of the IEEE Circuits and Systems Society at the National School of Electronics and Telecommunications of Sfax.
+          </p>
+        </div>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link to="/contact" className="btn btn-primary">Join the chapter</Link>
           <Link to="/about" className="btn btn-ghost">About us</Link>

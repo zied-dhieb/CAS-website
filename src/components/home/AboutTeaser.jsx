@@ -7,9 +7,11 @@ export default function AboutTeaser() {
     <section className="container-page mt-24 grid items-center gap-10 md:grid-cols-2">
       <div>
         <h2 data-node="Who we are" className="text-3xl font-bold">Who we are</h2>
-        <p className="mt-4 opacity-85">
-          We are the newest student branch chapter at ENET'Com, formed on July 27, 2022, with 365 student members so far. The IEEE Circuits and Systems Society promotes the theory, design, tools and implementation of circuits and systems, from industry to agriculture, medicine and biology. We have worked on Industry 4.0 and Agriculture 4.0. <Review note="Paraphrased from the text you sent. Confirm the member count and its date." />
-        </p>
+        <div className="card mt-4">
+          <p className="opacity-90 leading-relaxed">
+            We are the newest student branch chapter at ENET'Com, formed on July 27, 2022, with 365 student members so far. The IEEE Circuits and Systems Society promotes the theory, design, tools and implementation of circuits and systems, from industry to agriculture, medicine and biology. We have worked on Industry 4.0 and Agriculture 4.0. <Review note="Paraphrased from the text you sent. Confirm the member count and its date." />
+          </p>
+        </div>
         <Link to="/about" className="btn btn-ghost mt-6">Read our story</Link>
       </div>
       <figure className="frame">
