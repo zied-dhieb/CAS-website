@@ -1,0 +1,10 @@
+{
+  "year": 2026,
+  "members": [
+    { "name": "Soulaiman Baklouti", "role": "Chair", "image": "chair" },
+    { "name": "Yasmine Mhiri", "role": "Vice Chair", "image": "vice-chair" },
+    { "name": "Nourhene Ben Mesmia", "role": "Secretary", "image": "secretary" },
+    { "name": "Hamed Krichen", "role": "Treasurer", "image": "treasurer" },
+    { "name": "Fatma Mbarki", "role": "Webmaster", "image": "webmaster" }
+  ]
+}

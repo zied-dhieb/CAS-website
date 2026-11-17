@@ -1,0 +1,9 @@
+{
+  "review": true,
+  "items": [
+    { "title": "Industry 4.0", "text": "Automation, connected machines and smart production, explored through hands-on work." },
+    { "title": "Agriculture 4.0", "text": "Sensors, electronics and data applied to farming." },
+    { "title": "Circuits and electronics", "text": "Analog and digital design, from schematic to working board." },
+    { "title": "Embedded systems and prototyping", "text": "Turning ideas into prototypes that run on real hardware." }
+  ]
+}

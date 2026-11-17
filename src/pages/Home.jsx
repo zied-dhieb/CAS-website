@@ -1,0 +1,21 @@
+import Hero from '../components/home/Hero.jsx'
+import AboutTeaser from '../components/home/AboutTeaser.jsx'
+import InNumbers from '../components/home/InNumbers.jsx'
+import AwardFeature from '../components/home/AwardFeature.jsx'
+import WhatWeDo from '../components/home/WhatWeDo.jsx'
+import TeamSection from '../components/home/TeamSection.jsx'
+import JoinCTA from '../components/home/JoinCTA.jsx'
+
+export default function Home() {
+  return (
+    <>
+      <Hero />
+      <AboutTeaser />
+      <InNumbers />
+      <AwardFeature />
+      <WhatWeDo />
+      <TeamSection />
+      <JoinCTA />
+    </>
+  )
+}

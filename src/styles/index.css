@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+  }
+
+  .dark body {
+    @apply bg-night text-paper;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-brand;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-md px-5 py-2.5 font-semibold transition-colors;
+  }
+
+  .btn-primary {
+    @apply bg-brand text-white hover:bg-brand-dark;
+  }
+
+  .btn-ghost {
+    @apply border border-ink/25 hover:border-brand hover:text-brand dark:border-paper/30;
+  }
+
+  /* A signal trace: one thin line that ends in a node, used between sections. */
+  .trace {
+    @apply relative h-px w-full bg-ink/15 dark:bg-paper/20;
+  }
+
+  .trace::after {
+    content: '';
+    @apply absolute -top-[3px] left-0 h-[7px] w-[7px] rounded-full bg-brand;
+  }
+}
+
+@layer components {
+  /* Frame corners take the curve of the CAS logo's green band. */
+  .card {
+    @apply rounded-bl-[2rem] rounded-tr-[2rem] bg-white p-6 text-ink dark:bg-white/[0.06] dark:text-paper dark:ring-1 dark:ring-brand-light/25 dark:backdrop-blur;
+    box-shadow: 0 24px 50px -22px rgba(20, 80, 30, 0.35);
+  }
+
+  .frame {
+    @apply overflow-hidden rounded-bl-[2rem] rounded-tr-[2rem] border border-brand/40;
+  }
+}
+
+/* Depth: a wash from pale (or night) to deep green, with fine grain, fixed behind the scrolling page. */
+body {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 .25 0 0 0 0 0 0 0 0 .35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    linear-gradient(105deg, #F7F9F5 0%, #F7F9F5 35%, #bfe0b6 75%, #4f9d4a 100%);
+  background-attachment: fixed;
+}
+
+.dark body {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 1 0 0 0 0 .5 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    linear-gradient(105deg, #071009 0%, #071009 35%, #0d2a14 75%, #14501f 100%);
+}
+
+/* Glossy badge behind icons. */
+.gem {
+  display: inline-flex;
+  height: 3.5rem;
+  width: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  color: #fff;
+  background: linear-gradient(145deg, #8fd14f, #1B5E20);
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, .55), 0 10px 18px -6px rgba(27, 94, 32, .7);
+}
+
+@keyframes pinpulse {
+  0%,
+  100% {
+    opacity: .55;
+  }
+
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px #9BD83A);
+  }
+}
+
+.chip-pin {
+  animation: pinpulse 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip-pin {
+    animation: none;
+  }
+}
