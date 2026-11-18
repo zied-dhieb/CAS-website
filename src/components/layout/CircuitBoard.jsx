@@ -47,6 +47,48 @@ export default function CircuitBoard() {
     return () => { ro.disconnect(); window.removeEventListener('scroll', level); window.removeEventListener('resize', measure) }
   }, [pathname])
 
+  useEffect(() => {
+    const root = svg.current?.parentElement
+    if (!root) return
+    const rb = root.getBoundingClientRect()
+    const els = root.querySelectorAll('[data-node]')
+    els.forEach((el, idx) => {
+      const b = el.getBoundingClientRect()
+      const nodeY = b.top - rb.top + b.height / 2
+      const isReached = nodeY < lit || hover === idx
+
+      if (el.classList.contains('card')) {
+        el.classList.toggle('circuit-active', isReached)
+        el.classList.toggle('card-lit', isReached)
+      } else {
+        const closestCard = el.closest('.card')
+        if (closestCard) {
+          closestCard.classList.toggle('circuit-active', isReached)
+          closestCard.classList.toggle('card-lit', isReached)
+        } else {
+          const sectionCards = el.parentElement?.querySelectorAll('.card')
+          if (sectionCards && sectionCards.length > 0) {
+            sectionCards.forEach((c) => {
+              c.classList.toggle('circuit-active', isReached)
+              c.classList.toggle('card-lit', isReached)
+            })
+          }
+        }
+      }
+    })
+    return () => {
+      els.forEach((el) => {
+        const cards = el.classList.contains('card')
+          ? [el]
+          : (el.closest('.card') ? [el.closest('.card')] : [...(el.parentElement?.querySelectorAll('.card') || [])])
+        cards.forEach((c) => {
+          c.classList.remove('circuit-active')
+          c.classList.remove('card-lit')
+        })
+      })
+    }
+  }, [lit, hover, pathname])
+
   const branch = (n) => `M${TX} ${n.y - 28} l28 28 H${Math.max(n.x - 18, TX + 28)}`
   const paths = (<><path d={`M${TX} 0 V${g.h}`} />{g.nodes.map((n, i) => <path key={i} d={branch(n)} />)}</>)
   const lines = (cls, w, style) => <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth={w} className={cls} style={style}>{paths}</g>

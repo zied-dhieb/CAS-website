@@ -1,0 +1,14 @@
+category: technical
+Robotics Bootcamp, Session 2: Building the Foundations
+
+On September 30th, the second session of our Robotics Bootcamp was successfully organized by IEEE CASS ENET'Com SBC in close collaboration with IEEE RAS ENET'Com SBC.
+
+Building on the foundations introduced during the first session, participants continued their journey into robotics by exploring actuators and the power board, gaining a clearer understanding of their functions and their importance in controlling and powering a robotic system. The session then shifted into a practical phase, where participants worked on the assembly of the wired circuit of their line-following robots.
+
+Through this hands-on activity, participants had the opportunity to connect and integrate the different electronic components while putting their newly acquired knowledge into practice. The process encouraged them to experiment, troubleshoot, and collaborate, turning theoretical concepts into concrete technical skills.
+
+Beyond the technical aspects, the session fostered a strong spirit of teamwork, curiosity, and problem-solving, as participants worked together to progressively bring their robots closer to completion.
+
+A special thanks goes to our dedicated trainers, Soulaiman Baklouti and Louay Mestiri, for their guidance, patience, and continuous support throughout the session.
+
+Two sessions completed, two more to go!

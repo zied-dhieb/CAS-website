@@ -1,0 +1,6 @@
+category: technical
+The inaugural session of our Robotics Bootcamp, marking the official launch of this exciting technological journey, was successfully organized by IEEE RAS ENET'Com SBC in close collaboration with IEEE CASS ENET'Com SBC. This immersive event offered participants a dynamic day packed with intellectual curiosity, hands-on discovery, and engaging practical workshops.
+
+At the core of the program, foundational robotics concepts were explored through a comprehensive, step-by-step introduction to all the essential electronic components required to design and build a functional line-following robot. Far from just listening to theory, attendees immediately put their knowledge into practice by learning how to safely power an LED and configure indispensable hardware such as infrared obstacle detectors and ultrasonic distance sensors.
+
+From tentative first steps to brainstorming fresh, creative innovations, an inspiring energy and remarkable teamwork drove the room from the very start, creating a collaborative environment where technical learning seamlessly met genuine fun. True to the spirit of #Teams_Build_Dreams, this milestone concluded brilliantly with proud smiles and shared ambitions: one session down, three more to go!

@@ -27,8 +27,8 @@ export default function Navbar() {
     <header className="sticky top-0 z-30 border-b border-ink/10 bg-paper/90 backdrop-blur dark:border-paper/10 dark:bg-night/90">
       <div className="container-page flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <img src={cas} alt="IEEE CAS ENET'Com Student Branch Chapter logo" className="h-10 w-10 rounded-full" />
-          <span className="font-display text-lg font-bold">CAS ENET'Com</span>
+          <img src={cas} alt="IEEE CASS ENET'Com Student Branch Chapter logo" className="h-10 w-10 rounded-full" />
+          <span className="font-display text-lg font-bold">IEEE CASS ENET'Com SBC</span>
         </Link>
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
           {links.map(([label, to]) => <NavLink key={to} to={to} end={to === '/'} className={item}>{label}</NavLink>)}
