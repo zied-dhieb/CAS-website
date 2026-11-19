@@ -222,6 +222,98 @@
     box-shadow: 0 0 0 1px rgba(155, 216, 58, .35), 0 0 34px -4px rgba(107, 170, 28, .55), 0 24px 50px -22px rgba(20, 80, 30, .35);
   }
 
+  /* Home awards showcase floating medals & cards */
+  @keyframes medalFloat {
+    0%, 100% {
+      transform: translateY(-6px);
+    }
+    50% {
+      transform: translateY(6px);
+    }
+  }
+
+  .award-float {
+    animation: medalFloat 6s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .award-card {
+    transition: transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+  }
+
+  .award-medal-img {
+    filter: drop-shadow(0 0 4px rgba(107, 170, 28, 0.15));
+    transition: filter 0.5s ease;
+  }
+
+  .dark .award-medal-img {
+    filter: drop-shadow(0 0 4px rgba(107, 170, 28, 0.25));
+  }
+
+  .award-card.is-lit .award-medal-img {
+    filter: drop-shadow(0 0 18px rgba(107, 170, 28, 0.35));
+  }
+
+  .dark .award-card.is-lit .award-medal-img {
+    filter: drop-shadow(0 0 18px rgba(107, 170, 28, 0.65));
+  }
+
+  @media (hover: hover) {
+    .award-card:hover {
+      transform: translateY(-2px);
+      border-color: #8AD82A !important;
+      border-top-color: #8AD82A !important;
+      box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
+        0 0 16px 2px rgba(107, 170, 28, 0.3),
+        0 24px 50px -22px rgba(20, 80, 30, 0.25) !important;
+    }
+
+    .dark .award-card:hover {
+      box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.25),
+        0 0 20px 3px rgba(107, 170, 28, 0.5),
+        0 24px 50px -22px rgba(20, 80, 30, 0.45) !important;
+    }
+
+    .award-card:hover .award-medal-img {
+      filter: drop-shadow(0 0 22px rgba(107, 170, 28, 0.45));
+    }
+
+    .dark .award-card:hover .award-medal-img {
+      filter: drop-shadow(0 0 22px rgba(107, 170, 28, 0.85));
+    }
+  }
+
+  .award-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: #8AD82A !important;
+    border-top-color: #8AD82A !important;
+    outline: 2px solid #2E8B2E;
+    outline-offset: 4px;
+  }
+
+  .award-card:focus-visible .award-medal-img {
+    filter: drop-shadow(0 0 22px rgba(107, 170, 28, 0.45));
+  }
+
+  .dark .award-card:focus-visible .award-medal-img {
+    filter: drop-shadow(0 0 22px rgba(107, 170, 28, 0.85));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .award-float {
+      animation: none !important;
+      transform: none !important;
+    }
+    .award-card,
+    .award-card:hover,
+    .award-card:focus-visible {
+      transform: none !important;
+    }
+  }
+
   /* Footer full-width band */
   .site-footer {
     position: relative;
@@ -488,6 +580,81 @@
       scrollbar-color: #6BAA1C transparent;
     }
   }
+
+  /* Contact form field styling */
+  .field {
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.9rem;
+    font: inherit;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(12, 26, 16, 0.25);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .dark .field {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(155, 216, 58, 0.32);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .dark .field:hover {
+    border-color: rgba(155, 216, 58, 0.5);
+  }
+
+  .field::placeholder {
+    opacity: 0.5;
+  }
+
+  .field:focus {
+    outline: none;
+    border-color: #8AD82A;
+    box-shadow: 0 0 0 3px rgba(138, 216, 42, 0.18), 0 0 16px 2px rgba(107, 170, 28, 0.28);
+  }
+
+  .dark .field option {
+    background: #071009;
+    color: #F7F9F5;
+  }
+
+  .topic-chip {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    border: 1px solid rgba(107, 170, 28, 0.4);
+    background: rgba(107, 170, 28, 0.08);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+
+  input:checked + .topic-chip {
+    background: #2E8B2E;
+    color: #fff;
+    border-color: #8AD82A;
+    box-shadow: 0 0 12px rgba(107, 170, 28, 0.4);
+  }
+
+  input:focus-visible + .topic-chip {
+    outline: 2px solid #8AD82A;
+    outline-offset: 2px;
+  }
+
+  @media (hover: hover) {
+    .topic-chip:hover {
+      border-color: #8AD82A;
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .topic-chip {
+      transition: border-color 0.2s ease;
+    }
+    .topic-chip:hover {
+      transform: none;
+    }
+  }
 }
 
 /* Hide top navbar when event modal is open so it never blocks or overlaps */
@@ -629,3 +796,56 @@ body {
     transform: none !important;
   }
 }
+
+/* About page closing banner trace & Contact page channel traces linking cards */
+.closing-trace,
+.channel-trace {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .closing-trace,
+  .channel-trace {
+    display: block;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    width: var(--trace-w, 4rem);
+    height: 2px;
+    margin-top: -1px;
+    background: linear-gradient(90deg, rgba(107, 170, 28, 0.35), rgba(107, 170, 28, 0.12));
+    transition: background 0.5s ease, box-shadow 0.5s ease;
+    pointer-events: none;
+  }
+
+  .channel-trace {
+    --trace-w: 3.5rem;
+  }
+
+  .closing-trace::after,
+  .channel-trace::after {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: -3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: #6BAA1C;
+    box-shadow: 0 0 6px 1px rgba(107, 170, 28, 0.6);
+    transition: background 0.5s ease, box-shadow 0.5s ease;
+  }
+
+  .card.is-lit .closing-trace,
+  .card.is-lit .channel-trace {
+    background: linear-gradient(90deg, #8AD82A, #6BAA1C);
+    box-shadow: 0 0 10px 1px rgba(138, 216, 42, 0.7);
+  }
+
+  .card.is-lit .closing-trace::after,
+  .card.is-lit .channel-trace::after {
+    background: #8AD82A;
+    box-shadow: 0 0 12px 3px rgba(138, 216, 42, 0.9);
+  }
+}
+

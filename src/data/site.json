@@ -10,5 +10,9 @@
   "contact": {
     "email": "cass-enetcom@ieee.tn",
     "address": "Route de Tunis km 10, Cité El Ons, Technopôle de Sfax, 3018 Sfax (Sakiet Ezzit), Tunisie"
+  },
+  "form": {
+    "endpoint": "https://api.web3forms.com/submit",
+    "accessKey": "d27d8038-af6f-4371-b677-2e60d82f4abb"
   }
 }

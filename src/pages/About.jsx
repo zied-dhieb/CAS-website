@@ -141,28 +141,23 @@ export default function About() {
         </div>
 
         {/* Full-width Closing Banner */}
-        <div data-glow className="mt-16 frame bg-brand-dark text-white p-8 sm:p-12 relative overflow-hidden">
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="max-w-2xl">
-              <p className="text-xl sm:text-2xl md:text-3xl font-display font-semibold leading-relaxed">
-                {aboutData.vision.closing}
-              </p>
-              <div className="mt-8">
-                <Link
-                  to="/contact"
-                  className="btn btn-primary bg-white text-ink hover:bg-brand-light hover:text-white shadow-lg"
-                >
-                  Contact the chapter
-                </Link>
-              </div>
+        <div className="mt-16 flex flex-col items-center gap-10 lg:flex-row lg:gap-16">
+          <div data-glow className="card relative order-2 w-full p-8 sm:p-10 lg:order-1 lg:flex-1">
+            <p className="font-display text-xl font-semibold leading-relaxed sm:text-2xl md:text-3xl">
+              {aboutData.vision.closing}
+            </p>
+            <div className="mt-8">
+              <Link to="/contact" className="btn btn-primary">Contact the chapter</Link>
             </div>
-            <div className="shrink-0 flex items-center justify-center">
-              <img
-                src={casLogo}
-                alt="IEEE Circuits and Systems Society logo"
-                className="h-24 sm:h-32 w-auto object-contain drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
-              />
-            </div>
+            <span className="closing-trace" aria-hidden="true" />
+          </div>
+          <div className="order-1 shrink-0 lg:order-2">
+            <img
+              src={casLogo}
+              alt="IEEE Circuits and Systems Society logo"
+              className="h-32 w-32 rounded-full object-cover sm:h-40 sm:w-40 lg:h-52 lg:w-52"
+              style={{ filter: 'drop-shadow(0 14px 22px rgba(0,0,0,0.35))' }}
+            />
           </div>
         </div>
       </section>

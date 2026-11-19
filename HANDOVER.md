@@ -1,167 +1,504 @@
-# Project Handover & Context Document: IEEE CAS ENET'Com SBC Website
+# Handover: Contact Form & Contact Page Implementation
 
-> **Purpose:** This document is prepared for any developer or AI assistant (LLM) continuing work on this repository. It provides the full technical architecture, historical timeline of diagnoses, attempted experiments, applied fixes, and the exact current state of the codebase.
-
----
-
-## 1. Project Overview & Tech Stack
-
-* **Client/Domain:** IEEE Circuits and Systems Society (CAS), ENET'Com Student Branch Chapter (National School of Electronics and Telecommunications of Sfax, Tunisia).
-* **Application Type:** Single Page Application (SPA).
-* **Core Technologies:**
-  * **Framework:** React 18 (`react`, `react-dom`)
-  * **Routing:** React Router v6 (`react-router-dom`)
-  * **Build Tool & Dev Server:** Vite 5 (`vite`, `@vitejs/plugin-react`)
-  * **Styling:** Tailwind CSS 3 (`tailwindcss`, `postcss`, `autoprefixer`)
-  * **3D Graphics:** Three.js r160 (`three`)
-  * **Icons:** Lucide React (`lucide-react`)
-* **Visual Theme & Identity:** "The Living Circuit" — Cyber-electronic circuit aesthetic with green/emerald neon traces on a dark background, light/dark mode switchable, featuring a 3D WebGL background motherboard and an interactive 2D SVG circuit overlay with simulated voltage probes.
+## Overview
+This document summarizes the full implementation of the contact form and the restructuring of the Contact page on the IEEE CAS ENET'Com SBC website (`cas-enetcom-website`). The backend is completely serverless and database-free, powered by the **Web3Forms** API.
 
 ---
 
-## 2. Directory Structure & Key Files
+## 1. Configuration & Site Data (`src/data/site.json`)
 
-```
-cas-enetcom-websiteV.3 - Copy/
-├── index.html                   # Main HTML shell (loads fonts, pre-paint theme script, favicon)
-├── vite.config.js               # Vite config with relative base path and Rollup vendor chunking
-├── package.json                 # Scripts: "dev", "start", "build", "preview"
-├── tailwind.config.js           # Design tokens (colors: brand, ink, paper, night; custom fonts)
-├── postcss.config.js            # PostCSS plugins (tailwindcss, autoprefixer)
-├── public/
-│   └── favicon.png              # Chapter icon
-└── src/
-    ├── main.jsx                 # React root mount with BrowserRouter
-    ├── App.jsx                  # App routing, navbar, footer, Scene3D, and CircuitBoard mounting
-    ├── assets/
-    │   ├── images/              # Event & award imagery (award-2026.png, ieee-day-group.png)
-    │   ├── logos/               # cas-logo.png, enetcom-sb-logo.png, enetcom-school-logo.png
-    │   └── team/                # Posters for board members (chair, vice-chair, etc.)
-    ├── components/
-    │   ├── home/                # Home page sections:
-    │   │   ├── Hero.jsx         # Hero title, copy, CTA buttons, WebGL check + GlassChip fallback
-    │   │   ├── GlassChip.jsx    # Pure SVG animated microchip with pulsing pins & CAS logo die
-    │   │   ├── AboutTeaser.jsx  # "Who we are" summary + IEEE Day group photo
-    │   │   ├── InNumbers.jsx    # Animated counter stats inside frosted .card box
-    │   │   ├── AwardFeature.jsx # Chapter of the Year 2026 poster & text
-    │   │   ├── WhatWeDo.jsx     # Focus areas grid (Industry 4.0, Agriculture 4.0, etc.)
-    │   │   ├── TeamSection.jsx  # Executive board members with image fallback handling
-    │   │   └── JoinCTA.jsx      # Bottom contact CTA banner
-    │   ├── layout/
-    │   │   ├── Navbar.jsx       # Sticky responsive navbar with dark/light mode toggle
-    │   │   ├── Footer.jsx       # Footer with social links, partner logos, and contact info
-    │   │   ├── Scene3D.jsx      # WebGL 3D circuit board, data packets, fog, and floating 3D chip
-    │   │   └── CircuitBoard.jsx # 2D SVG overlay with vertical trunk, 45° branches, and hover probe
-    │   └── ui/
-    │       ├── Review.jsx       # Yellow badge marking placeholder data needing verification
-    │       └── PhotoSlot.jsx    # Placeholder for pending photography
-    ├── data/                    # JSON data stores:
-    │   ├── site.json            # Taglines, social links, contact info
-    │   ├── activities.json      # Domain focus areas & descriptions
-    │   ├── stats.json           # Chapter numeric metrics
-    │   └── team.json            # Board members and their roles
-    └── styles/
-        └── index.css            # Tailwind directives, .card, .frame, .gem, and noise background
+### Web3Forms Endpoint & Access Key
+The form configuration was added to `site.json`:
+- `endpoint`: `"https://api.web3forms.com/submit"`
+- `accessKey`: `"d27d8038-af6f-4371-b677-2e60d82f4abb"`
+
+### Bug Fix: Email Placeholder
+A literal placeholder string `"[EMAIL_ADDRESS]"` in `site.contact.email` was identified and replaced with the actual chapter address: `"cass-enetcom@ieee.tn"`.
+
+```json
+{
+  "name": "IEEE CAS ENET'Com SBC",
+  "fullName": "IEEE Circuits and Systems Society, ENET'Com Student Branch Chapter",
+  "tagline": "Circuits and systems, built by students at ENET'Com.",
+  "socials": {
+    "linkedin": "https://www.linkedin.com/company/ieee-cass-enetcom-sbc/home/",
+    "instagram": "https://www.instagram.com/ieee.cass.enetcom.sbc",
+    "facebook": "https://www.facebook.com/IEEE.ENETCOM.CAS.SBC"
+  },
+  "contact": {
+    "email": "cass-enetcom@ieee.tn",
+    "address": "Route de Tunis km 10, Cité El Ons, Technopôle de Sfax, 3018 Sfax (Sakiet Ezzit), Tunisie"
+  },
+  "form": {
+    "endpoint": "https://api.web3forms.com/submit",
+    "accessKey": "d27d8038-af6f-4371-b677-2e60d82f4abb"
+  }
+}
 ```
 
 ---
 
-## 3. History of Issues & Solutions
+## 2. Contact Form Component (`src/components/contact/ContactForm.jsx`)
 
-### A. Initial Workspace Diagnosis & Core Fixes
-1. **Broken Static / Preview Loading (`vite.config.js`):**
-   * *Issue:* Vite defaulted to root paths (`/assets/...`). Opening `dist/index.html` or hosting on subfolders caused asset 404s.
-   * *Fix:* Added `base: './'` to [vite.config.js](file:///c:/cas-enetcom-websiteV.3%20-%20Copy/vite.config.js).
-   * *Optimization:* Added manual Rollup chunk splitting for `three` and vendor packages to eliminate bundle size warnings.
-2. **Missing `start` Command (`package.json`):**
-   * *Issue:* Running `npm start` gave `Missing script: "start"`.
-   * *Fix:* Added `"start": "vite"` alias to [package.json](file:///c:/cas-enetcom-websiteV.3%20-%20Copy/package.json).
-3. **Favicon 404:**
-   * *Fix:* Added [public/favicon.png](file:///c:/cas-enetcom-websiteV.3%20-%20Copy/public/favicon.png) and linked it in [index.html](file:///c:/cas-enetcom-websiteV.3%20-%20Copy/index.html).
-4. **Desktop Layout Shift & Misalignment (`src/App.jsx`):**
-   * *Issue:* `<main>` had `lg:pl-20` (80px padding) while `Navbar` and `Footer` did not. On screens $\ge 1024\text{px}$, page content was pushed 80px to the right, misaligned with the header and footer.
-   * *Fix:* Removed `lg:pl-20` from `<main>`. Now Navbar, Main, and Footer align symmetrically.
-5. **3D Hero Chip Invisible / Washing Out (`Scene3D.jsx`):**
-   * *Issue:* A CSS mask `[mask-image:linear-gradient(to_bottom,transparent,black_30%)]` was applied to the 3D canvas container. Because the Hero is at the top 0%–30% of the screen, the 3D CAS chip and top traces were masked to 100% transparent.
-   * *Fix:* Removed the top-clipping CSS mask. The 3D fog (`THREE.FogExp2`) already handles natural distance fading.
-6. **3D Chip Route-Awareness & Scroll Collision (`Scene3D.jsx`):**
-   * *Issue:* The floating CAS chip model was stationed at `z = 0` on all pages. When scrolling down on the Home page, the camera flew straight through the chip model; on `/about` and `/contact`, the chip hovered over unrelated text.
-   * *Fix:* Added `useLocation()` check so the hero chip only exists on `/`, and added smooth scale-down on scroll (`Math.max(0, 1 - sm * 6)`) before the camera passes it.
-7. **WebGL Lifecycle & StrictMode Cleanup (`Scene3D.jsx`):**
-   * *Fix:* Added full disposal in `useEffect` cleanup (`geometry.dispose()`, `material.dispose()`, `texture.dispose()`, `renderer.dispose()`) to prevent WebGL memory leaks during React 18 StrictMode remounts.
-8. **Hero SVG Fallback (`Hero.jsx`):**
-   * *Fix:* Added runtime WebGL capability detection. If a user's browser or device lacks WebGL hardware acceleration, [GlassChip.jsx](file:///c:/cas-enetcom-websiteV.3%20-%20Copy/src/components/home/GlassChip.jsx) automatically renders as an SVG fallback so the hero never looks empty.
-9. **Circuit Trace Cutting Across Columns (`About.jsx`):**
-   * *Issue:* `Vision` and `Mission` were in a 2-column grid. Having `data-node="Mission"` in column 2 caused a neon trace to route directly over column 1's text.
-   * *Fix:* Consolidated to `data-node="Vision & Mission"` on the left column.
+### Key Architecture & Logic
+1. **State Machine (`status`)**:
+   - `'idle'`: Form ready for submission.
+   - `'sending'`: Disables button, renders loading spinner, prevents double submissions.
+   - `'success'`: Replaces form with confirmation screen (`aria-live="polite"`), keeping height stable (`min-h-[22rem]`) to avoid layout jumps.
+   - `'error'`: Keeps entered field values intact, surfaces a `role="alert"` notification above the submit row with a direct `mailto:` link to `site.contact.email`.
+2. **Access Key Guard**:
+   - If `accessKey` is missing, empty, or starts with `"PASTE"`, network submission is prevented and status immediately transitions to `'error'`.
+3. **Spam Honeypot (`botcheck`)**:
+   - Web3Forms convention using a visually hidden checkbox off-screen (`left: -9999px`, `tabIndex={-1}`, `aria-hidden="true"`).
+   - If checked by automated bots, the form halts network requests and silently pretends `'success'`.
+   - When legitimate users submit, `botcheck: false` is passed in the payload.
+4. **Privacy / Console Security**:
+   - Access key and message content are never logged to `console.log` / `console.error`.
+5. **Topics**:
+   - Pill radio selection supporting:
+     - `"Joining the chapter"` (default)
+     - `"Collaboration or partnership"`
+     - `"A question"`
+     - `"Something else"`
+6. **Form Reset**:
+   - The "Send another message" button resets the state to `'idle'` and clears the form inputs.
 
----
+### Full Component Code:
+```jsx
+import { useState } from 'react'
+import { Send, Loader2, CheckCircle2 } from 'lucide-react'
+import site from '../../data/site.json'
 
-### B. User-Requested Experimentation & Subsequent Revert
+const TOPICS = [
+  'Joining the chapter',
+  'Collaboration or partnership',
+  'A question',
+  'Something else',
+]
 
-1. **The Request:**
-   * User noticed:
-     - End of neon line looked like an abrupt cut.
-     - Neon trace line ran over the award medal image.
-     - Background grid made plain text harder to read on certain screens.
-     - User proposed: *"behind each paragraphe to creat a box like that one in the last image"* (referencing the frosted glass `.card` from `InNumbers.jsx`).
-2. **What Was Attempted:**
-   * Enclosed every paragraph across all pages in `.card` boxes.
-   * In [src/styles/index.css](file:///c:/cas-enetcom-websiteV.3%20-%20Copy/src/styles/index.css), modified `.card` using Tailwind `@apply` with arbitrary box-shadow: `shadow-[0_24px_50px_-22px_rgba(20, 80, 30, .35)]`.
-   * **The Bug:** Tailwind's `@apply` cannot parse commas/spaces in arbitrary values; PostCSS failed with: `The shadow-[0_24px_50px_-22px_rgba(20, class does not exist`, crashing Vite with a 500 error.
-   * **The Fix:** Moved `box-shadow` to a standard CSS property declaration on `.card`.
-3. **The User's Revert Decision:**
-   * User feedback: *"want to get back i didn't like the changes"*.
-   * Having every single paragraph wrapped in heavy frosted boxes degraded the open, sleek look of the site.
-   * **Action Taken:** Completely removed all `.card` wrappers from paragraphs on Home, About, Activities, Awards, Contact, and ComingSoon, reverting to the original, clean, open layout.
-   * Reverted `CircuitBoard.jsx` to its clean single-layer SVG configuration while keeping null-safety guards.
+const labelCls =
+  'block font-mono text-xs font-semibold uppercase tracking-widest text-brand dark:text-brand-light mb-1.5'
 
----
+export default function ContactForm() {
+  const [status, setStatus] = useState('idle') // 'idle' | 'sending' | 'success' | 'error'
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    topic: 'Joining the chapter',
+    message: '',
+    botcheck: false,
+  })
 
-## 4. Current State of the Codebase
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }))
+  }
 
-* **Build Status:** `npm run build` succeeds in ~4s with **0 errors and 0 warnings**.
-* **Dev Server Status:** `npm run dev` and `npm start` start cleanly without warnings.
-* **Layout & Visuals:**
-  * Clean, open typography directly against the subtle 3D motherboard background.
-  * Section cards used only where appropriate (In Numbers, What we work on, Executive Board).
-  * 3D WebGL background active, smoothly reacting to mouse movement and scrolling.
-  * 2D circuit traces route to section headers (`data-node="Name"`).
-* **Theme Switching:** Dark mode default with instant light mode toggle in navbar (`localStorage` persisted).
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
----
+    if (status === 'sending') return
 
-## 5. Development & Deployment Guide
+    // Honeypot spam protection: if checked, pretend success and do not call the network
+    if (formData.botcheck) {
+      setStatus('success')
+      return
+    }
 
-### Running Locally
-```bash
-# Install dependencies
-npm install
+    const accessKey = site?.form?.accessKey?.trim() || ''
+    const endpoint = site?.form?.endpoint || 'https://api.web3forms.com/submit'
 
-# Start local Vite dev server
-npm run dev
-# or
-npm start
-# -> Access at http://localhost:5173
+    // If accessKey is empty or starts with "PASTE", do NOT call the network
+    if (!accessKey || accessKey.startsWith('PASTE')) {
+      setStatus('error')
+      return
+    }
+
+    setStatus('sending')
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          topic: formData.topic,
+          subject: `New message from the website: ${formData.topic}`,
+          from_name: "CAS ENET'Com website",
+          botcheck: false,
+        }),
+      })
+
+      if (!response.ok) {
+        setStatus('error')
+        return
+      }
+
+      const data = await response.json()
+      if (data && data.success === true) {
+        setStatus('success')
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  const handleReset = () => {
+    setFormData({
+      name: '',
+      email: '',
+      topic: 'Joining the chapter',
+      message: '',
+      botcheck: false,
+    })
+    setStatus('idle')
+  }
+
+  if (status === 'success') {
+    return (
+      <div
+        aria-live="polite"
+        className="min-h-[22rem] flex flex-col items-center justify-center text-center space-y-4 p-4"
+      >
+        <CheckCircle2 size={40} className="text-brand-light shrink-0" />
+        <h3 className="text-2xl font-bold font-display">Message sent</h3>
+        <p className="text-base opacity-90 leading-relaxed max-w-sm">
+          Thank you. We will get back to you by email.
+        </p>
+        <div className="pt-2">
+          <button
+            type="button"
+            onClick={handleReset}
+            className="btn btn-ghost"
+          >
+            Send another message
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} noValidate={false}>
+      {/* Hidden honeypot */}
+      <input
+        type="checkbox"
+        name="botcheck"
+        id="botcheck"
+        tabIndex="-1"
+        aria-hidden="true"
+        autoComplete="off"
+        checked={formData.botcheck}
+        onChange={handleChange}
+        style={{
+          position: 'absolute',
+          left: '-9999px',
+          width: '1px',
+          height: '1px',
+          opacity: 0,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Row 1: Name and Email side by side on sm screens */}
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="contact-name" className={labelCls}>
+            Your name
+          </label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            required
+            autoComplete="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="field"
+          />
+        </div>
+        <div>
+          <label htmlFor="contact-email" className={labelCls}>
+            Your email
+          </label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            required
+            autoComplete="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="field"
+          />
+        </div>
+      </div>
+
+      {/* Topic selection via chips */}
+      <fieldset className="mt-4">
+        <legend className={labelCls}>Topic</legend>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {TOPICS.map((t) => (
+            <label key={t} className="cursor-pointer">
+              <input
+                type="radio"
+                name="topic"
+                value={t}
+                checked={formData.topic === t}
+                onChange={() => setFormData((prev) => ({ ...prev, topic: t }))}
+                className="sr-only"
+              />
+              <span className="topic-chip">{t}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      {/* Message */}
+      <div className="mt-4">
+        <label htmlFor="contact-message" className={labelCls}>
+          Your message
+        </label>
+        <textarea
+          id="contact-message"
+          name="message"
+          rows={4}
+          required
+          minLength={10}
+          maxLength={2000}
+          value={formData.message}
+          onChange={handleChange}
+          className="field resize-y"
+        />
+      </div>
+
+      {/* Error message above bottom row */}
+      {status === 'error' && (
+        <div role="alert" className="mt-4 text-sm text-red-600 dark:text-red-400">
+          Something went wrong. Please try again, or write to us directly at{' '}
+          <a
+            href={`mailto:${site.contact.email}`}
+            className="underline font-medium hover:text-brand dark:hover:text-brand-light break-all"
+          >
+            {site.contact.email}
+          </a>
+        </div>
+      )}
+
+      {/* Bottom row */}
+      <div className="mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-xs opacity-70">
+          Your message is sent by email to the chapter team.
+        </p>
+        <button
+          type="submit"
+          disabled={status === 'sending'}
+          className="btn btn-primary w-full sm:w-auto"
+        >
+          {status === 'sending' ? (
+            <>
+              <Loader2 size={18} className="animate-spin motion-reduce:animate-none" />
+              <span>Sending...</span>
+            </>
+          ) : (
+            <>
+              <Send size={18} />
+              <span>Send message</span>
+            </>
+          )}
+        </button>
+      </div>
+    </form>
+  )
+}
 ```
 
-### Production Build & Preview
-```bash
-# Build production bundle (outputs to dist/)
-npm run build
+---
 
-# Preview production build locally
-npm run preview
-# -> Access at http://localhost:4173
+## 3. Contact Page Structure (`src/pages/Contact.jsx`)
+
+### Key Architecture & Logic
+1. **Two-Column Grid**:
+   - `lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14`.
+   - Stacks below `lg` with "Find us" first, form second.
+2. **`data-node` Constraint**:
+   - Exactly two `data-node` attributes exist on the entire page:
+     1. `<h1 data-node="Contact us" ...>`
+     2. `<h2 data-node="Find us" ...>`
+   - The right column heading (`Write to us`) explicitly has **no** `data-node` attribute so the background `CircuitBoard` animation does not branch across the left column.
+3. **Single Glass Card Wrapper**:
+   - Exactly one card wrapper (`<div data-glow className="card mt-4 p-6 sm:p-7">`) surrounds `<ContactForm />`, placed in `Contact.jsx`.
+4. **Interactive Channel Tiles (Left Column)**:
+   - **Email Tile**: Includes a copy button that calls `navigator.clipboard.writeText(...)` within try/catch, swapping `Copy` for `Check` for 1.8 seconds with screen-reader announcement. The button is separate from the email mailto anchor.
+   - **Address Tile**: The entire tile is an anchor targeting Google Maps (`mapsUrl`).
+   - **Socials Tile**: Three circle buttons linking to LinkedIn, Instagram, and Facebook.
+   - All three tiles include `<span className="channel-trace" aria-hidden="true" />` which connect to the form card on large screens.
+
+### Full Page Code:
+```jsx
+import { useState, useRef, useEffect } from 'react'
+import { Linkedin, Instagram, Facebook, MapPin, Mail, Copy, Check, ExternalLink } from 'lucide-react'
+import site from '../data/site.json'
+import ContactForm from '../components/contact/ContactForm.jsx'
+
+const socials = [
+  ['LinkedIn', Linkedin, site.socials.linkedin],
+  ['Instagram', Instagram, site.socials.instagram],
+  ['Facebook', Facebook, site.socials.facebook],
+]
+
+export default function Contact() {
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.contact.address)}`
+  const [copied, setCopied] = useState(false)
+  const copyTimeoutRef = useRef(null)
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(site.contact.email)
+      setCopied(true)
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current)
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1800)
+    } catch {
+      // Fallback if clipboard API is not available
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current)
+    }
+  }, [])
+
+  return (
+    <>
+      <section className="container-page pt-16">
+        <h1 data-node="Contact us" className="text-4xl font-bold sm:text-5xl">
+          Contact us
+        </h1>
+        <div data-glow className="card mt-6 max-w-xl">
+          <p className="text-lg opacity-90 leading-relaxed">
+            Questions about the chapter or how to join? Reach us here.
+          </p>
+        </div>
+      </section>
+
+      <section className="container-page mt-14 mb-8 grid items-start gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
+        {/* Left Column: Find us tiles */}
+        <div>
+          <h2 data-node="Find us" className="text-3xl font-bold">
+            Find us
+          </h2>
+          <div className="mt-4 flex flex-col gap-4">
+            {/* Tile a: Email */}
+            <div data-glow className="card relative flex items-center gap-4 p-4">
+              <span className="gem !h-11 !w-11 shrink-0 !rounded-xl">
+                <Mail size={20} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <span className="block font-mono text-xs font-semibold uppercase tracking-widest text-brand dark:text-brand-light">
+                  Email
+                </span>
+                <a
+                  href={`mailto:${site.contact.email}`}
+                  className="block break-all font-medium transition-colors hover:text-brand dark:hover:text-brand-light"
+                >
+                  {site.contact.email}
+                </a>
+              </div>
+              <button
+                type="button"
+                onClick={handleCopyEmail}
+                className="hover-glow-icon shrink-0 rounded-full p-2"
+                aria-label="Copy email address"
+              >
+                {copied ? (
+                  <Check size={18} className="text-brand dark:text-brand-light" />
+                ) : (
+                  <Copy size={18} />
+                )}
+              </button>
+              <span className="sr-only" aria-live="polite">
+                {copied ? 'Email address copied' : ''}
+              </span>
+              <span className="channel-trace" aria-hidden="true" />
+            </div>
+
+            {/* Tile b: Address */}
+            <a
+              href={mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              data-glow
+              className="card group relative flex items-center gap-4 p-4 text-inherit no-underline"
+            >
+              <span className="gem !h-11 !w-11 shrink-0 !rounded-xl">
+                <MapPin size={20} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <span className="block font-mono text-xs font-semibold uppercase tracking-widest text-brand dark:text-brand-light">
+                  Address
+                </span>
+                <span className="block text-sm leading-snug">
+                  {site.contact.address}
+                </span>
+              </div>
+              <ExternalLink
+                size={18}
+                className="shrink-0 opacity-60 transition-opacity group-hover:opacity-100"
+              />
+              <span className="channel-trace" aria-hidden="true" />
+            </a>
+
+            {/* Tile c: Social */}
+            <div data-glow className="card relative flex items-center justify-between gap-4 p-4">
+              <span className="font-mono text-xs font-semibold uppercase tracking-widest text-brand dark:text-brand-light">
+                Follow us
+              </span>
+              <div className="flex items-center gap-3">
+                {socials.map(([name, Icon, href]) => (
+                  <a
+                    key={name}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="social-btn"
+                    aria-label={name}
+                  >
+                    <Icon size={18} />
+                  </a>
+                ))}
+              </div>
+              <span className="channel-trace" aria-hidden="true" />
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: Form */}
+        <div>
+          <h2 className="text-3xl font-bold">Write to us</h2>
+          <div data-glow className="card mt-4 p-6 sm:p-7">
+            <ContactForm />
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
 ```
 
 ---
 
-## 6. Pending Review Items (Content Checks)
-
-Look for `<Review />` tags across the codebase for items that need final chapter verification before public launch:
-* Member count (365) and founding date in [src/data/stats.json](file:///c:/cas-enetcom-websiteV.3%20-%20Copy/src/data/stats.json).
-* Formal mission text in [src/pages/About.jsx](file:///c:/cas-enetcom-websiteV.3%20-%20Copy/src/pages/About.jsx).
-* Official chapter email & postal address in [src/data/site.json](file:///c:/cas-enetcom-websiteV.3%20-%20Copy/src/data/site.json).
-* IEEE Day event photo publishing permissions (NEXUS watermark & IEEE RAS logo).
-
+## 4. Verification & Build
+- `npm run build` ran with zero errors or warnings.
+- All form logic (idle, sending, success, error, honeypot, reset, access key guard) operates purely in client-side React with direct fetch to Web3Forms.
