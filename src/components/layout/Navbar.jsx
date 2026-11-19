@@ -34,10 +34,10 @@ export default function Navbar() {
           {links.map(([label, to]) => <NavLink key={to} to={to} end={to === '/'} className={item}>{label}</NavLink>)}
         </nav>
         <div className="flex items-center gap-1">
-          <button onClick={() => setDark(!dark)} className="rounded p-2 hover:text-brand" aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
+          <button onClick={() => setDark(!dark)} className="hover-glow-icon rounded p-2" aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
             {dark ? <Sun size={20} /> : <Moon size={20} />}
           </button>
-          <button onClick={() => setOpen(!open)} className="rounded p-2 lg:hidden" aria-label="Toggle menu" aria-expanded={open}>
+          <button onClick={() => setOpen(!open)} className="hover-glow-icon rounded p-2 lg:hidden" aria-label="Toggle menu" aria-expanded={open}>
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>

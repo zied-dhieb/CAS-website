@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body {
     @apply bg-paper text-ink font-body antialiased;
   }
@@ -27,16 +31,119 @@
     @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
 
+  /* Shared interactive hover/focus glow utilities */
+  .hover-glow-btn {
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .hover-glow-icon {
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  }
+
+  /* Base button styling inheriting the unified hover glow */
   .btn {
-    @apply inline-flex items-center gap-2 rounded-md px-5 py-2.5 font-semibold transition-colors;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.375rem;
+    padding: 0.625rem 1.25rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, background-color 0.2s ease;
   }
 
   .btn-primary {
-    @apply bg-brand text-white hover:bg-brand-dark;
+    background-color: #2E8B2E;
+    color: #ffffff;
+    border: 1px solid transparent;
   }
 
   .btn-ghost {
-    @apply border border-ink/25 hover:border-brand hover:text-brand dark:border-paper/30;
+    border: 1px solid rgba(12, 26, 16, 0.25);
+    color: inherit;
+  }
+
+  .dark .btn-ghost {
+    border-color: rgba(247, 249, 245, 0.3);
+  }
+
+  /* Hover styles for desktop/pointer devices */
+  @media (hover: hover) {
+    .btn:hover:not(:disabled):not([aria-disabled="true"]),
+    .hover-glow-btn:hover:not(:disabled):not([aria-disabled="true"]) {
+      transform: translateY(-2px);
+      border-color: #8AD82A;
+      box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.28);
+    }
+
+    .dark .btn:hover:not(:disabled):not([aria-disabled="true"]),
+    .dark .hover-glow-btn:hover:not(:disabled):not([aria-disabled="true"]) {
+      box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.45);
+    }
+
+    .hover-glow-icon:not(.no-transform):hover:not(:disabled):not([aria-disabled="true"]) {
+      transform: translateY(-2px);
+    }
+
+    .hover-glow-icon:hover:not(:disabled):not([aria-disabled="true"]) {
+      border-color: #8AD82A;
+      color: #8AD82A;
+      box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.28);
+    }
+
+    .dark .hover-glow-icon:hover:not(:disabled):not([aria-disabled="true"]) {
+      box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.45);
+    }
+
+    .btn-ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+      color: #8AD82A;
+    }
+  }
+
+  /* Keyboard focus-visible */
+  .btn:focus-visible:not(:disabled):not([aria-disabled="true"]),
+  .hover-glow-btn:focus-visible:not(:disabled):not([aria-disabled="true"]) {
+    transform: translateY(-2px);
+    border-color: #8AD82A;
+    box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.28);
+  }
+
+  .dark .btn:focus-visible:not(:disabled):not([aria-disabled="true"]),
+  .dark .hover-glow-btn:focus-visible:not(:disabled):not([aria-disabled="true"]) {
+    box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.45);
+  }
+
+  .hover-glow-icon:not(.no-transform):focus-visible:not(:disabled):not([aria-disabled="true"]) {
+    transform: translateY(-2px);
+  }
+
+  .hover-glow-icon:focus-visible:not(:disabled):not([aria-disabled="true"]) {
+    border-color: #8AD82A;
+    color: #8AD82A;
+    box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.28);
+  }
+
+  .dark .hover-glow-icon:focus-visible:not(:disabled):not([aria-disabled="true"]) {
+    box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.45);
+  }
+
+  .btn-ghost:focus-visible:not(:disabled):not([aria-disabled="true"]) {
+    color: #8AD82A;
+  }
+
+  /* Reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn-primary,
+    .btn-ghost,
+    .hover-glow-btn,
+    .hover-glow-icon,
+    .social-btn {
+      transform: none !important;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease !important;
+    }
   }
 
   /* A signal trace: one thin line that ends in a node, used between sections. */
@@ -51,8 +158,10 @@
 }
 
 @layer components {
+
   /* Frame corners take the curve of the CAS logo's green band. */
-  .card {
+  .card,
+  .glass-panel {
     border-radius: 0 2rem 0 2rem;
     padding: 1.5rem;
     background: rgba(255, 255, 255, 0.88);
@@ -65,12 +174,189 @@
     transition: border-color 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
   }
 
-  .dark .card {
+  .dark .card,
+  .dark .glass-panel {
     background: rgba(24, 42, 22, 0.72);
     color: #F7F9F5;
     border: 1px solid rgba(107, 170, 28, 0.25);
     border-top: 1px solid rgba(255, 255, 255, 0.22);
     box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.2), 0 24px 50px -22px rgba(20, 80, 30, 0.35);
+  }
+
+  /* Lighter glass panel for pull-quotes (~60% background opacity) */
+  .glass-panel--quote {
+    border-radius: 0 2rem 0 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.55);
+    color: #0C1A10;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(12, 26, 16, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.65);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.6), 0 20px 40px -22px rgba(20, 80, 30, 0.15);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+  }
+
+  .dark .glass-panel--quote {
+    background: rgba(24, 42, 22, 0.44);
+    color: #F7F9F5;
+    border: 1px solid rgba(107, 170, 28, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.14), 0 20px 40px -22px rgba(20, 80, 30, 0.25);
+  }
+
+  /* Universal Laser/Current Scroll-Glow on Reach */
+  [data-glow] {
+    transition: box-shadow .5s ease, border-color .5s ease;
+  }
+
+  [data-glow].is-lit {
+    border-color: rgba(107, 170, 28, .55);
+    border-top-color: rgba(155, 216, 58, .7);
+    box-shadow: 0 0 0 1px rgba(107, 170, 28, .25), 0 0 24px -4px rgba(107, 170, 28, .35), 0 24px 50px -22px rgba(20, 80, 30, .2);
+  }
+
+  .dark [data-glow].is-lit {
+    border-color: rgba(155, 216, 58, .7);
+    border-top-color: rgba(239, 255, 201, .85);
+    box-shadow: 0 0 0 1px rgba(155, 216, 58, .35), 0 0 34px -4px rgba(107, 170, 28, .55), 0 24px 50px -22px rgba(20, 80, 30, .35);
+  }
+
+  /* Footer full-width band */
+  .site-footer {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(to bottom, transparent 0px, rgba(247, 249, 245, 0.92) 120px, rgba(247, 249, 245, 0.92) 100%);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .dark .site-footer {
+    background: linear-gradient(to bottom, transparent 0px, rgba(7, 16, 9, 0.92) 120px, rgba(7, 16, 9, 0.92) 100%);
+  }
+
+  /* Footer hairline at the very top */
+  .footer-hairline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(107, 170, 28, 0.6) 50%, transparent 100%);
+    opacity: 0.65;
+    transition: opacity 0.5s ease, box-shadow 0.5s ease;
+  }
+
+  .footer-hairline.is-lit {
+    opacity: 1;
+    box-shadow: 0 0 8px 1px rgba(107, 170, 28, 0.6), 0 0 20px 2px rgba(107, 170, 28, 0.35);
+  }
+
+  .dark .footer-hairline.is-lit {
+    box-shadow: 0 0 10px 1px rgba(155, 216, 58, 0.75), 0 0 24px 3px rgba(107, 170, 28, 0.45);
+  }
+
+  /* 6px glowing dot at the left end of the container */
+  .footer-node {
+    position: absolute;
+    top: -2.5px;
+    left: 1.25rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background-color: #6BAA1C;
+    box-shadow: 0 0 6px 1px rgba(107, 170, 28, 0.6);
+    transition: box-shadow 0.5s ease, background-color 0.5s ease;
+  }
+
+  @media (min-width: 640px) {
+    .footer-node {
+      left: 2rem;
+    }
+  }
+
+  .footer-hairline.is-lit .footer-node {
+    background-color: #8AD82A;
+    box-shadow: 0 0 10px 2px rgba(138, 216, 42, 0.95), 0 0 18px 4px rgba(107, 170, 28, 0.6);
+  }
+
+  /* Footer IEEE ENET'Com Student Branch link */
+  .footer-sb-link {
+    display: inline-block;
+    transition: opacity 200ms ease;
+  }
+
+  .footer-sb-link:hover {
+    opacity: 0.85;
+  }
+
+  /* Footer explore link underline animation */
+  .footer-link {
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+    transition: color 0.2s ease;
+  }
+
+  .footer-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #8AD82A;
+    transition: width 0.25s ease;
+  }
+
+  .footer-link:hover::after {
+    width: 100%;
+  }
+
+  /* Footer social glass circle buttons */
+  .social-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(107, 170, 28, 0.35);
+    background: rgba(107, 170, 28, 0.08);
+    color: inherit;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .dark .social-btn {
+    background: rgba(24, 42, 22, 0.6);
+    border-color: rgba(107, 170, 28, 0.4);
+  }
+
+  @media (hover: hover) {
+    .social-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      border-color: #8AD82A;
+      color: #8AD82A;
+      box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.28);
+    }
+    .dark .social-btn:hover:not(:disabled) {
+      box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.45);
+    }
+  }
+
+  .social-btn:focus-visible:not(:disabled) {
+    transform: translateY(-2px);
+    border-color: #8AD82A;
+    color: #8AD82A;
+    box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.28);
+  }
+
+  .dark .social-btn:focus-visible:not(:disabled) {
+    box-shadow: 0 0 16px 2px rgba(107, 170, 28, 0.45);
   }
 
   /* Reusable glowing neon border modifier (.card-lit / .active-glow / .circuit-active) */
@@ -81,7 +367,7 @@
   .card.circuit-active {
     border-color: rgba(107, 170, 28, 0.6) !important;
     border-top-color: rgba(155, 216, 58, 0.85) !important;
-    box-shadow: 
+    box-shadow:
       inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
       0 0 15px 1px rgba(107, 170, 28, 0.35),
       0 0 28px 3px rgba(107, 170, 28, 0.18),
@@ -95,7 +381,7 @@
   .dark .card.circuit-active {
     border-color: rgba(155, 216, 58, 0.7) !important;
     border-top-color: rgba(239, 255, 201, 0.85) !important;
-    box-shadow: 
+    box-shadow:
       inset 0 1px 0 0 rgba(255, 255, 255, 0.3),
       0 0 16px 2px rgba(107, 170, 28, 0.5),
       0 0 32px 5px rgba(107, 170, 28, 0.25),
@@ -106,7 +392,7 @@
   .card:hover {
     border-color: rgba(155, 216, 58, 0.6);
     border-top-color: rgba(239, 255, 201, 0.8);
-    box-shadow: 
+    box-shadow:
       inset 0 1px 0 0 rgba(255, 255, 255, 0.35),
       0 0 14px 1px rgba(107, 170, 28, 0.4),
       0 0 26px 3px rgba(107, 170, 28, 0.2),
@@ -123,7 +409,7 @@
     transform: translateY(-6px) scale(1.02) !important;
     border-color: rgba(155, 216, 58, 0.8) !important;
     border-top-color: rgba(239, 255, 201, 0.95) !important;
-    box-shadow: 
+    box-shadow:
       inset 0 1px 0 0 rgba(255, 255, 255, 0.45),
       0 0 18px 2px rgba(107, 170, 28, 0.45),
       0 0 35px 5px rgba(107, 170, 28, 0.22),
@@ -134,16 +420,82 @@
     transform: translateY(-6px) scale(1.02) !important;
     border-color: rgba(155, 216, 58, 0.9) !important;
     border-top-color: rgba(239, 255, 201, 1) !important;
-    box-shadow: 
+    box-shadow:
       inset 0 1px 0 0 rgba(255, 255, 255, 0.35),
       0 0 22px 3px rgba(107, 170, 28, 0.6),
       0 0 42px 7px rgba(107, 170, 28, 0.3),
       0 30px 60px -20px rgba(20, 80, 30, 0.55) !important;
   }
 
+  /* Event card styling for Expandable grid - NO CSS transform transition to avoid fighting Motion layout animations */
+  .event-card {
+    transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+  }
+
+  .event-card:hover {
+    border-color: rgba(155, 216, 58, 0.8) !important;
+    border-top-color: rgba(239, 255, 201, 0.95) !important;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
+      0 0 18px 2px rgba(107, 170, 28, 0.45),
+      0 0 34px 5px rgba(107, 170, 28, 0.22),
+      0 20px 45px -15px rgba(20, 80, 30, 0.35) !important;
+  }
+
+  .dark .event-card:hover {
+    border-color: rgba(155, 216, 58, 0.9) !important;
+    border-top-color: rgba(239, 255, 201, 1) !important;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.35),
+      0 0 20px 3px rgba(107, 170, 28, 0.55),
+      0 0 40px 6px rgba(107, 170, 28, 0.28),
+      0 20px 45px -15px rgba(20, 80, 30, 0.5) !important;
+  }
+
   .frame {
     @apply overflow-hidden rounded-bl-[2rem] rounded-tr-[2rem] border border-brand/40;
   }
+
+  /* Clean scrollbar hiding for carousels / thumbnail strips */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+
+  /* Custom Themed Scrollbar for Event Modal */
+  .modal-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+  .modal-scroll::-webkit-scrollbar-track {
+    background: transparent;
+    margin-block: 2.25rem;   /* slightly more than the 2rem corner radius */
+  }
+  .modal-scroll::-webkit-scrollbar-thumb {
+    background: #6BAA1C;
+    border-radius: 9999px;
+  }
+
+  /* Firefox only */
+  @supports not selector(::-webkit-scrollbar) {
+    .modal-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: #6BAA1C transparent;
+    }
+  }
+}
+
+/* Hide top navbar when event modal is open so it never blocks or overlaps */
+body.modal-open header {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
 }
 
 /* Depth: a wash from pale (or night) to deep green, with fine grain, fixed behind the scrolling page. */
@@ -174,6 +526,7 @@ body {
 }
 
 @keyframes pinpulse {
+
   0%,
   100% {
     opacity: .55;
@@ -192,5 +545,87 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .chip-pin {
     animation: none;
+  }
+}
+
+/* FamilyWall 3D Marquee */
+@keyframes familyWallUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes familyWallDown {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.family-wall-wrapper {
+  position: relative;
+  height: 360px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+  transform: none;
+}
+
+@media (min-width: 768px) {
+  .family-wall-wrapper {
+    height: 520px;
+    transform: perspective(1200px) rotateY(-8deg) rotateZ(2deg);
+    transform-style: preserve-3d;
+  }
+}
+
+.family-wall-track-0 {
+  animation: familyWallUp 44s linear infinite;
+}
+
+.family-wall-track-1 {
+  animation: familyWallDown 52s linear infinite;
+}
+
+.family-wall-track-2 {
+  animation: familyWallUp 48s linear infinite;
+}
+
+.family-wall-wrapper:hover .family-wall-track {
+  animation-play-state: paused;
+}
+
+.family-wall-tile {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.family-wall-tile:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 20px 2px rgba(107, 170, 28, 0.5), 0 12px 28px -6px rgba(20, 80, 30, 0.4);
+  z-index: 10;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .family-wall-wrapper {
+    transform: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  .family-wall-track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .family-wall-tile:hover {
+    transform: none !important;
   }
 }

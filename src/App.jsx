@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import ScrollToTop from './components/layout/ScrollToTop.jsx'
 import Navbar from './components/layout/Navbar.jsx'
 import Footer from './components/layout/Footer.jsx'
 import Scene3D from './components/layout/Scene3D.jsx'
@@ -9,10 +10,14 @@ import Activities from './pages/Activities.jsx'
 import Awards from './pages/Awards.jsx'
 import Contact from './pages/Contact.jsx'
 import ComingSoon from './pages/ComingSoon.jsx'
+import useGlowOnReach from './hooks/useGlowOnReach.js'
 
 export default function App() {
+  useGlowOnReach()
+
   return (
     <div className="flex min-h-screen flex-col">
+      <ScrollToTop />
       <Scene3D />
       <Navbar />
       {/* The circuit background lives behind the page content */}

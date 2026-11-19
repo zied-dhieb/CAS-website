@@ -7,5 +7,8 @@
     "instagram": "https://www.instagram.com/ieee.cass.enetcom.sbc",
     "facebook": "https://www.facebook.com/IEEE.ENETCOM.CAS.SBC"
   },
-  "contact": { "email": "REVIEW: chapter email", "address": "REVIEW: school address, Sfax, Tunisia" }
+  "contact": {
+    "email": "cass-enetcom@ieee.tn",
+    "address": "Route de Tunis km 10, Cité El Ons, Technopôle de Sfax, 3018 Sfax (Sakiet Ezzit), Tunisie"
+  }
 }

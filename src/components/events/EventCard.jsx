@@ -5,6 +5,7 @@ export default function EventCard({ event, onSelect }) {
 
   return (
     <article
+      data-glow
       onClick={onSelect}
       className="board-card card group cursor-pointer flex flex-col h-full p-4 sm:p-5 transition-all duration-300"
     >

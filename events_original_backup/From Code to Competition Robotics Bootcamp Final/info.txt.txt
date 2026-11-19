@@ -1,0 +1,16 @@
+category: technical
+Where code, creativity, and teamwork met the track.
+
+The Robotics Bootcamp reached its grand finale on October 4th, as IEEE RAS ENET’Com SBC and IEEE CASS ENET’Com SBC gathered participants for an exciting Competition Day in celebration of IEEE Day.
+
+Following three sessions of learning, designing, wiring, building, and programming, the same teams returned for the final challenge: putting their line-following robots to the test. Participants made their final adjustments to both their robots and code before taking on the competition track.
+
+In accordance with the competition guidelines, each robot had to operate fully autonomously, without remote, wired, Bluetooth, or Wi-Fi control. The robots followed a black line on a white track featuring straight sections, curves, intersections, and tight turns, while meeting the required technical specifications: an Arduino UNO, at least three infrared sensors, DC motors, battery power, and maximum dimensions of 25 × 25 × 20 cm
+
+Each team had three official attempts, with the fastest recorded time determining the final ranking. The challenge rewarded not only speed, but also precision, control, and the ability to navigate demanding track sections. Teams were also assessed through the homologation process, which covered technical documentation, safety compliance, autonomous operation, and the quality of their mechanical, electronic, and software design.
+
+The atmosphere was energetic and collaborative as participants supported one another, analyzed their robots’ performance, and pushed for better results with every attempt. At the end of the competition, the first- and second-place teams were announced and awarded prizes for their outstanding performance.
+
+This final session was more than a competition, it was the culmination of four sessions of hands-on learning, teamwork, creativity, and innovation.
+
+Four sessions completed, one unforgettable robotics journey!

@@ -24,7 +24,7 @@ export default function TeamSection() {
           const src = posters[`../../assets/team/${m.image}.png`]
           return (
             <li key={m.name} className="flex">
-              <div className="board-card card group flex flex-col w-full h-full p-4 sm:p-5">
+              <div data-glow className="board-card card group flex flex-col w-full h-full p-4 sm:p-5">
                 <div className="overflow-hidden rounded-bl-[1.5rem] rounded-tr-[1.5rem] border border-brand/25 bg-black/20 aspect-[3/4] flex items-center justify-center">
                   {src ? (
                     <img

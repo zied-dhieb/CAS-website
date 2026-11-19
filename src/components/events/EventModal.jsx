@@ -50,7 +50,7 @@ export default function EventModal({ event, onClose }) {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-black/10 dark:bg-white/10 hover:bg-brand/20 text-ink dark:text-paper transition-colors z-10"
+          className="hover-glow-icon absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-black/10 dark:bg-white/10 text-ink dark:text-paper z-10"
           aria-label="Close modal"
         >
           <X size={22} />
@@ -91,14 +91,14 @@ export default function EventModal({ event, onClose }) {
                 <>
                   <button
                     onClick={prevPhoto}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/60 text-white hover:bg-brand transition-colors backdrop-blur-sm border border-white/20"
+                    className="hover-glow-icon no-transform absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/60 text-white backdrop-blur-sm border border-white/20"
                     aria-label="Previous photo"
                   >
                     <ChevronLeft size={22} />
                   </button>
                   <button
                     onClick={nextPhoto}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/60 text-white hover:bg-brand transition-colors backdrop-blur-sm border border-white/20"
+                    className="hover-glow-icon no-transform absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/60 text-white backdrop-blur-sm border border-white/20"
                     aria-label="Next photo"
                   >
                     <ChevronRight size={22} />
@@ -118,9 +118,9 @@ export default function EventModal({ event, onClose }) {
                   <button
                     key={img.fileName || idx}
                     onClick={() => setPhotoIndex(idx)}
-                    className={`relative flex-shrink-0 w-16 h-12 sm:w-20 sm:h-14 rounded-lg overflow-hidden border transition-all ${
+                    className={`hover-glow-btn relative flex-shrink-0 w-16 h-12 sm:w-20 sm:h-14 rounded-lg overflow-hidden border cursor-pointer ${
                       photoIndex === idx
-                        ? 'ring-2 ring-brand-light border-transparent scale-105 opacity-100'
+                        ? 'ring-2 ring-brand-light border-transparent opacity-100'
                         : 'border-white/10 opacity-60 hover:opacity-100'
                     }`}
                   >

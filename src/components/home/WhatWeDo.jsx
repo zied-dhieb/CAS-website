@@ -24,6 +24,7 @@ export default function WhatWeDo({ activeIndex = null, onSelectCard }) {
           return (
             <li
               key={a.title}
+              data-glow
               onClick={() => handleCardClick(i)}
               className={`card cursor-pointer transition-all duration-300 ${isCardActive ? 'card-lit active-glow' : ''}`}
             >

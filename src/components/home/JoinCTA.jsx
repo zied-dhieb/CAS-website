@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 export default function JoinCTA() {
   return (
     <section className="container-page mt-24">
-      <div data-node="Join" className="card max-w-2xl p-6 sm:p-8">
+      <div data-node="Join" data-glow className="card max-w-2xl p-6 sm:p-8">
         <h2 className="max-w-xl text-2xl font-bold font-display sm:text-3xl">
           Want to build circuits and systems with us?
         </h2>

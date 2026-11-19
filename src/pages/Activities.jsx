@@ -1,11 +1,9 @@
 import { useState, useMemo } from 'react'
 import WhatWeDo from '../components/home/WhatWeDo.jsx'
-import EventCard from '../components/events/EventCard.jsx'
-import EventModal from '../components/events/EventModal.jsx'
+import ExpandableEventsGrid from '../components/events/ExpandableEventsGrid.jsx'
 import { events } from '../data/events.js'
 
 export default function Activities() {
-  const [selectedEvent, setSelectedEvent] = useState(null)
   const [categoryFilter, setCategoryFilter] = useState('All')
 
   // Extract unique categories for filter tabs
@@ -26,7 +24,7 @@ export default function Activities() {
     <>
       <section className="container-page pt-16">
         <h1 data-node="Activities" className="text-4xl font-bold sm:text-5xl">Activities</h1>
-        <div className="card mt-6 max-w-2xl">
+        <div data-glow className="card mt-6 max-w-2xl">
           <p className="text-lg opacity-90 leading-relaxed">Workshops, trainings, visits and projects around circuits and systems.</p>
         </div>
       </section>
@@ -51,10 +49,10 @@ export default function Activities() {
                 <button
                   key={cat}
                   onClick={() => setCategoryFilter(cat)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                  className={`hover-glow-btn px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer ${
                     categoryFilter === cat
-                      ? 'bg-brand text-white shadow-md'
-                      : 'bg-white/10 hover:bg-brand/10 border border-brand/20 opacity-80 hover:opacity-100'
+                      ? 'bg-brand text-white border-transparent shadow-md'
+                      : 'bg-white/10 hover:bg-brand/10 border-brand/20 opacity-80 hover:opacity-100'
                   }`}
                 >
                   {cat}
@@ -64,31 +62,15 @@ export default function Activities() {
           )}
         </div>
 
-        {/* Events Grid */}
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredEvents.map((event) => (
-            <EventCard
-              key={event.id}
-              event={event}
-              onSelect={() => setSelectedEvent(event)}
-            />
-          ))}
-        </div>
+        {/* Fluid Aceternity Expandable Grid */}
+        <ExpandableEventsGrid events={filteredEvents} />
 
         {filteredEvents.length === 0 && (
-          <div className="card mt-8 p-8 text-center opacity-70">
+          <div data-glow className="card mt-8 p-8 text-center opacity-70">
             No events found in this category.
           </div>
         )}
       </section>
-
-      {/* Expanded Modal Dashboard */}
-      {selectedEvent && (
-        <EventModal
-          event={selectedEvent}
-          onClose={() => setSelectedEvent(null)}
-        />
-      )}
     </>
   )
 }

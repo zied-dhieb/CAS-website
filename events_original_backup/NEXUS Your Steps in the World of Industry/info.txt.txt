@@ -1,0 +1,13 @@
+category: technical
+Your next step could shape your future.
+
+As part of NEXUS: Your Steps in the World of Industry, IEEE RAS ENET’Com Student Branch Chapter and IEEE CASS ENET’Com Student Branch Chapter joined forces to organize an in-person event in celebration of IEEE Day, bringing together engineering students for a day of inspiration, knowledge sharing, and hands-on learning.
+
+The event began with an opening ceremony featuring welcoming speeches from Ayoub Kallel, Chair of the IEEE ENET’Com Student Branch, alongside the Chairs of the IEEE RAS and IEEE CASS Student Branch Chapters, who shared their opening remarks and highlighted the importance of collaboration, technical learning, and student engagement within the IEEE community.
+
+The program continued with a Spotlight Session, “From Campus to Career”, led by Meriam Taieb, Computer Engineer and Technical Leader at TELNET Holding. Through her professional journey and experience in embedded systems, Android development, payment technologies, and secure transaction systems, she shared valuable insights into the transition from academic life to the professional world, inspiring students to explore opportunities and build their careers in the engineering industry.
+
+Following the Spotlight Session, participants enjoyed a coffee break before taking part in three parallel workshops covering different areas of engineering and emerging technologies. Yosr Smaoui led the PCB Design workshop, Ghassen Saidi introduced participants to Digital Twin technology, and Majdi Chennoufi guided the Embedded AI and Embedded Robotics workshop. These sessions offered participants the opportunity to explore specialized technical fields, deepen their knowledge, and discover practical applications of engineering concepts.
+The day concluded with a closing ceremony and the presentation of certificates to the trainers, recognizing their valuable contributions, expertise, and commitment to sharing their knowledge with the student community.
+
+Through this collaboration between IEEE RAS and IEEE CASS ENET’Com Student Branch Chapters, NEXUS offered an enriching experience that connected academic learning with industry perspectives while celebrating the spirit of IEEE Day.
