@@ -122,9 +122,22 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom row: copyright */}
-        <div className="mt-12 border-t border-brand/20 pt-5">
-          <p className="text-xs opacity-70 font-body">
+        {/* Bottom row: signature & copyright */}
+        <div className="mt-12 border-t border-brand/20 pt-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs opacity-70 font-body">
+          <p className="flex items-center gap-2">
+            <a
+              href="https://www.linkedin.com/in/zied-dhieb/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn profile of Zied Dhieb"
+              className="inline-flex h-6 w-6 items-center justify-center rounded border border-brand/40 transition-colors hover:border-brand hover:text-brand"
+            >
+              <Linkedin size={13} />
+            </a>
+            <span>Developed by Zied Dhieb</span>
+          </p>
+
+          <p>
             © 2026 IEEE CAS ENET'Com SBC
           </p>
         </div>
