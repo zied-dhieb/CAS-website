@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Factory, Sprout, Cpu, Rocket } from 'lucide-react'
 import data from '../../data/activities.json'
-import Review from '../ui/Review.jsx'
 
 const icons = [Factory, Sprout, Cpu, Rocket]
 
@@ -16,7 +15,7 @@ export default function WhatWeDo({ activeIndex = null, onSelectCard }) {
 
   return (
     <section className="container-page mt-24">
-      <h2 data-node="Focus" className="text-3xl font-bold">What we work on {data.review && <Review note="Titles come from your text and banner. Descriptions are drafts. Edit src/data/activities.json." />}</h2>
+      <h2 data-node="Focus" className="text-3xl font-bold">What we work on</h2>
       <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {data.items.map((a, i) => {
           const Icon = icons[i % icons.length]
