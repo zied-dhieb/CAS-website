@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import stats from '../../data/stats.json'
-import Review from '../ui/Review.jsx'
 
 function Count({ to }) {
   const ref = useRef(null)
@@ -29,7 +28,7 @@ function Count({ to }) {
 export default function InNumbers() {
   return (
     <section className="container-page mt-24">
-      <h2 data-node="Numbers" className="mt-8 text-3xl font-bold">The chapter in numbers {stats.review && <Review note="Placeholder values (0). Replace in src/data/stats.json." />}</h2>
+      <h2 data-node="Numbers" className="mt-8 text-3xl font-bold">The chapter in numbers</h2>
       <dl data-glow className="card mt-8 grid grid-cols-2 gap-x-6 gap-y-8 p-8 md:grid-cols-3">
         {stats.items.map((s) => (
           <div key={s.label}>
