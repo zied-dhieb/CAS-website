@@ -1,0 +1,10 @@
+category: Technical
+Celebrating IEEE Day with an insightful journey into the fundamentals of microcontrollers and embedded systems.
+
+In celebration of IEEE Day, the IEEE CASS & RAS ENET’Com Student Branch Chapters, in collaboration with the IEEE ENET’Com Student Branch, proudly launched NEXUS through an online session entitled “Introduction to Microcontrollers.” The session was presented by Dr. Nourchene Bradai, Associate Professor at ENET’Com’s Department of Electronics and Communication.
+
+Dr. Bradai began by introducing the fundamental building blocks of microcontrollers, including the CPU, memory, and peripherals, while clarifying the distinction between microcontrollers and microprocessors (MPUs/CPUs). She presented several examples of both technologies and explained the essential steps behind their operation.
+
+The session then explored the internal architecture of a microcontroller, offering participants a clear view of its main components and how they work together. Special attention was given to the role of GPIOs in enabling interaction with the physical world, as well as communication interfaces such as UART and I²C.
+
+Participants also discovered the main tools and environments used to program microcontrollers, along with key criteria for selecting the most suitable microcontroller for a given application. Dr. Bradai further highlighted the close relationship between microcontrollers and embedded systems, providing an overview of what an embedded system is, its essential components, and the role a microcontroller plays within it. The session concluded with an overview of the many application areas of microcontrollers and embedded systems.

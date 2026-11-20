@@ -1,0 +1,14 @@
+category: Technical
+
+Fundamentals of Robotics : An interactive virtual session hosted by IEEE RAS & CAS ENETCOM SBCs, led by Mr. Kayoum Djedidi.
+
+The IEEE RAS ENETCOM SBC, in proud collaboration with the IEEE CASS ENETCOM SBC, successfully hosted a highly engaging virtual infosession titled "Fundamentals of Robotics" via Google Meet. Led by the esteemed Mr. Kayoum Djedidi ,CEO and Cofounder of OORB Open Organic Robotics, and an active global IEEE leader.The session provided a profound dive into the core concepts of modern robotics, including a valuable introduction to ROS 2. Far from a standard lecture, the event was exceptionally interactive and brimming with added value, allowing attendees to directly engage with an expert who possesses extensive hands-on experience in edge AI, embedded systems, and telecommunications. This collaborative effort successfully bridged the gap between academic theory and real-world application, leaving participants deeply inspired and equipped with a stronger foundation for their future engineering projects.
+
+
+Exploring the Frontiers of AI & Robotics in Industry
+
+Under the banner of the Ramadhan Sessions , IEEE CASS ENET’Com SBC, IEEE RAS ENET’Com SBC, and IEEE IAS ENET’Com SBC proudly hosted an engaging online session via Google Meet, led by Mr. Omar El Hajji , an AI and robotics engineer specializing in computer vision and intelligent industrial systems, entitled “From Sensors to Decisions: AI & Robotics in Industrial Automation.”
+
+Throughout the session, he explored the evolving synergy between artificial intelligence and robotics, highlighting key concepts such as AI-assisted robotics and AI-driven automation. By presenting compelling real-world examples — including imitation learning — he offered participants a clear and practical understanding of how intelligent systems transform modern industrial environments.
+
+The session concluded with an interactive discussion, where Mr. El Hajji thoughtfully addressed participants’ questions, further fueling their curiosity and deepening their insight into the future of AI-powered automation.

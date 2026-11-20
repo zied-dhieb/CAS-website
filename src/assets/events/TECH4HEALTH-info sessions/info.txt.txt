@@ -1,0 +1,7 @@
+category : technical
+TECH4HEALTH Info Sessions
+To prepare for the Tech Up Health event, we successfully completed three essential preparation online sessions via Google Meet, ensuring everyone was ready to make the most of it!
+
+First, on November 16, Ms. Meriam Taieb kicked things off with "Kotlin Fundamentals and Mobile Development in Healthcare," sharing her extensive expertise in Android development and secure processing[cite: 1, 4]. This was followed on November 18 by Ms. Olfa Boutiti, who led a captivating session on "AI in Healthcare: Applications & Pathways into BME," drawing on her hands-on experience in Digital Twins and Embedded AI[cite: 3]. Finally, on November 20, Mr. Med Firas Ben Amor wrapped up our preparation with "Cybersecurity in Healthcare," offering crucial insights from his background in telecommunications and cybersecurity[cite: 2].
+
+A huge thank you to our incredible speakers, the IEEE ENET’Com Student Branch (including EMBS, WIE, and CAS), and every single participant who joined us—your enthusiasm has set the perfect foundation for what’s ahead[cite: 1, 2, 3, 4]!
