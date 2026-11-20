@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-paper text-ink font-body antialiased;
+    @apply bg-night text-paper font-body antialiased;
   }
 
   .dark body {
@@ -665,11 +665,11 @@ body.modal-open header {
   transition: opacity 0.2s ease;
 }
 
-/* Depth: a wash from pale (or night) to deep green, with fine grain, fixed behind the scrolling page. */
+/* Depth: a wash from night to deep green, with fine grain, fixed behind the scrolling page. */
 body {
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 .25 0 0 0 0 0 0 0 0 .35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    linear-gradient(105deg, #F7F9F5 0%, #F7F9F5 35%, #bfe0b6 75%, #4f9d4a 100%);
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 1 0 0 0 0 .5 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    linear-gradient(105deg, #071009 0%, #071009 35%, #0d2a14 75%, #14501f 100%);
   background-attachment: fixed;
 }
 

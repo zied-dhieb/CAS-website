@@ -560,20 +560,19 @@ function setup(el, isHomeRef) {
 
     // ----- theme -----
     const apply = () => {
-      const dark = document.documentElement.classList.contains('dark')
-      const p = PAL[dark ? 'dark' : 'light']
+      const p = PAL.dark
       scene.fog.color.setHex(p.fog)
       boardMat.color.setHex(p.board)
       grid.material.color.setHex(p.grid)
       traceMat.color.setHex(p.trace); traceMat.emissive.setHex(p.trace)
-      glowMat.color.setHex(p.trace); glowMat.opacity = dark ? 0.12 : 0.1
+      glowMat.color.setHex(p.trace); glowMat.opacity = 0.12
       chipMat.color.setHex(p.chip)
       dieMat.color.setHex(p.die); dieMat.emissive.setHex(p.die)
       packetMat.color.setHex(p.die); haloMat.color.setHex(p.die)
       heroGlowMats.forEach((m) => m.emissive.setHex(p.die))
       heroPinMats.forEach((m) => m.emissive.setHex(p.die))
       heroHalo.material.color.setHex(p.die)
-      heroHalo.material.opacity = dark ? 0.5 : 0.22
+      heroHalo.material.opacity = 0.5
     }
 
     const resize = () => {
